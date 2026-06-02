@@ -29,8 +29,6 @@
         .card-title { font-size: 12px; font-weight: 600; margin-top: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; height: 60px; background-color: #0a0a0a; display: flex; justify-content: space-around; align-items: center; z-index: 999; }
         .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--gray-text); text-decoration: none; font-size: 10px; }
-        /* Yeni iframe ayarı */
-        iframe { width: 100%; max-width: 500px; height: 300px; border-radius: 12px; margin-bottom: 15px; border: none; }
     </style>
 </head>
 <body>
@@ -60,7 +58,7 @@
         baslik: "Cennetin Bahçesinden, Kıtlık Toprağına",
         bolum: "FULL",
         afisUrl: "https://awscover.netshort.com/tos-vod-mya-v-da59d5a2040f5f77/coverG/prod/1351450106_%E8%8D%92%E5%B9%B4%E9%87%8D%E7%94%9F%EF%BC%8C%E6%88%91%E7%94%A8%E7%A5%9E%E5%86%9C%E5%AE%9D%E7%93%B6%E5%85%BB%E5%85%A8%E5%AE%B6%E5%9C%9F%E8%AF%AD.jpg~tplv-vod-noop.image",
-        embedUrl: "https://vkvideo.ru/video_ext.php?oid=581224883&id=456239017",
+        embedUrl: "https://vkvideo.ru/video581224883_456239017",
         reklamUrl: "",
         dil: "TR"
     };
@@ -70,7 +68,7 @@
             baslik: "Cennetin Bahçesinden, Kıtlık Toprağına", 
             bolum: "FULL", 
             afisUrl: "https://awscover.netshort.com/tos-vod-mya-v-da59d5a2040f5f77/coverG/prod/1351450106_%E8%8D%92%E5%B9%B4%E9%87%8D%E7%94%9F%EF%BC%8C%E6%88%91%E7%94%A8%E7%A5%9E%E5%86%9C%E5%AE%9D%E7%93%B6%E5%85%BB%E5%85%A8%E5%AE%B6%E5%9C%9F%E8%AF%AD.jpg~tplv-vod-noop.image", 
-            embedUrl: "https://vkvideo.ru/video_ext.php?oid=581224883&id=456239017", 
+            embedUrl: "https://vkvideo.ru/video581224883_456239017", 
             reklamUrl: "", 
             dil: "TR" 
         }
@@ -78,12 +76,8 @@
 
     function reklamliGit(reklamLinki, videoLinki, baslik) {
         if(reklamLinki) { window.open(reklamLinki, '_blank'); }
-        // Artık yönlendirme yapmıyor, iframe açıyor
-        document.getElementById('featured-area').innerHTML = `
-            <div class="featured-container">
-                <iframe src="${videoLinki}" allowfullscreen></iframe>
-                <div class="featured-title">İzleniyor: ${baslik}</div>
-            </div>`;
+        // VK iframe'i engellediği için doğrudan yönlendirme yapıyoruz
+        window.open(videoLinki, '_blank');
     }
 
     document.getElementById('featured-area').innerHTML = `
