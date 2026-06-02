@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShortMiniFlix Global - İzle</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: -apple-system, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        /* Üst Geri Butonu ve Başlık */
+        .top-bar {
+            width: 100%;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+        }
+        .back-btn { color: #fff; font-size: 20px; text-decoration: none; }
+        .video-title { font-size: 16px; font-weight: bold; }
+
+        /* Video Alanı (Esnek ve Mobil Uyumlu) */
+        .video-container {
+            width: 100%;
+            max-width: 600px;
+            position: relative;
+            background: #111;
+            margin-top: 10px;
+        }
+        /* 9:16 veya 16:9 uyumu için */
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 177.77%; /* 9:16 Dikey Short formatı için */
+            height: 0;
+            overflow: hidden;
+        }
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Alt Detay Alanı */
+        .details {
+            width: 100%;
+            max-width: 600px;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+        .tag { background: #e50914; color: #fff; padding: 3px 8px; font-size: 12px; border-radius: 4px; font-weight: bold; }
+        .description { color: #aaa; font-size: 13px; margin-top: 10px; line-height: 1.4; }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <a href="index.html" class="back-btn"><i class="fa-solid fa-chevron-left"></i></a>
+        <div class="video-title" id="diziAdi">Oynatılıyor...</div>
+    </div>
+
+    <div class="video-container">
+        <div class="video-wrapper">
+            <!-- Buraya iframe ile gömeceğimiz video gelecek patron -->
+            <iframe id="videoPlayer" src="" allowfullscreen allow="autoplay"></iframe>
+        </div>
+    </div>
+
+    <div class="details">
+        <span class="tag">Tek Parça Full HD</span>
+        <p class="description">ShortMiniFlix Global kalitesiyle kesintisiz mini drama keyfi. İyi seyirler dileriz patron!</p>
+    </div>
+
+    <script>
+        // URL'den hangi dizinin istendiğini çeken esnaf işi akıllı kod
+        const urlParams = new URLSearchParams(window.location.search);
+        const videoUrl = urlParams.get('vid');
+        const baslik = urlParams.get('title');
+
+        if(videoUrl) {
+            document.getElementById('videoPlayer').src = decodeURIComponent(videoUrl);
+        }
+        if(baslik) {
+            document.getElementById('diziAdi').innerText = decodeURIComponent(baslik);
+        }
+    </script>
+
+</body>
+</html>
