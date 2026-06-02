@@ -6,197 +6,81 @@
     <title>ShortMiniFlix Global</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --bg-color: #000000;
-            --card-bg: #121212;
-            --primary-color: #e50914;
-            --text-color: #ffffff;
-            --gray-text: #999999;
-            --green-tag: #00b050;
-        }
+        :root { --bg-color: #000000; --card-bg: #121212; --primary-color: #e50914; --text-color: #ffffff; --gray-text: #999999; --green-tag: #00b050; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            padding-bottom: 80px;
-            overflow-x: hidden;
-        }
-        header {
-            padding: 15px;
-            text-align: center;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
-        }
-        .main-logo {
-            font-size: 26px;
-            font-weight: 900;
-            color: var(--primary-color);
-            letter-spacing: 1px;
-        }
-        .featured-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 10px 20px 25px 20px;
-            background: linear-gradient(to bottom, #111 0%, var(--bg-color) 100%);
-            text-align: center;
-        }
-        .featured-banner {
-            width: 220px;
-            height: 290px;
-            object-fit: cover;
-            border-radius: 12px;
-            box-shadow: 0 8px 25px rgba(229, 9, 20, 0.15);
-            margin-bottom: 15px;
-        }
+        body { background-color: var(--bg-color); color: var(--text-color); font-family: sans-serif; padding-bottom: 80px; }
+        header { padding: 15px; text-align: center; }
+        .main-logo { font-size: 26px; font-weight: 900; color: var(--primary-color); letter-spacing: 1px; }
+        .featured-container { display: flex; flex-direction: column; align-items: center; padding: 10px 20px 25px 20px; text-align: center; }
+        .featured-banner { width: 220px; height: 290px; object-fit: cover; border-radius: 12px; margin-bottom: 15px; }
         .featured-badge-row { display: flex; gap: 8px; margin-bottom: 10px; }
-        .badge-db { background: #333; color: #fff; padding: 3px 8px; font-size: 11px; border-radius: 4px; font-weight: bold; }
-        .badge-new { background: var(--primary-color); color: #fff; padding: 3px 8px; font-size: 11px; border-radius: 4px; font-weight: bold; }
-        .featured-title { font-size: 20px; font-weight: 800; margin-bottom: 8px; max-width: 90%; line-height: 1.3; }
-        .featured-meta { font-size: 12px; color: var(--gray-text); margin-bottom: 15px; }
-        .featured-meta span { color: #00b050; font-weight: bold; }
-        .watch-btn {
-            background-color: #ffffff;
-            color: #000000;
-            border: none;
-            padding: 12px 35px;
-            font-size: 15px;
-            font-weight: bold;
-            border-radius: 6px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 4px 10px rgba(255,255,255,0.2);
-        }
+        .badge-lang { background: var(--primary-color); color: #fff; padding: 3px 8px; font-size: 11px; border-radius: 4px; font-weight: bold; }
+        .featured-title { font-size: 20px; font-weight: 800; margin-bottom: 8px; }
+        .watch-btn { background-color: #ffffff; color: #000000; border: none; padding: 12px 35px; font-size: 15px; font-weight: bold; border-radius: 6px; cursor: pointer; display: flex; align-items: center; gap: 8px; }
         .section-box { margin-bottom: 25px; padding-left: 15px; }
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-right: 15px;
-            margin-bottom: 12px;
-        }
+        .section-header { margin-bottom: 12px; }
         .section-title { font-size: 18px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
-        .view-all { color: var(--gray-text); font-size: 12px; text-decoration: none; display: flex; align-items: center; gap: 3px; }
-        .horizontal-scroll {
-            display: flex;
-            gap: 12px;
-            overflow-x: auto;
-            padding-bottom: 10px;
-            scrollbar-width: none;
-        }
-        .horizontal-scroll::-webkit-scrollbar { display: none; }
-        .drama-card { min-width: 135px; max-width: 135px; display: flex; flex-direction: column; cursor: pointer; }
-        .image-wrapper {
-            position: relative;
-            width: 100%;
-            height: 185px;
-            border-radius: 8px;
-            overflow: hidden;
-            background-color: #222;
-        }
+        .horizontal-scroll { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
+        .drama-card { min-width: 135px; max-width: 135px; cursor: pointer; }
+        .image-wrapper { position: relative; width: 100%; height: 185px; border-radius: 8px; overflow: hidden; background-color: #222; }
         .card-thumb { width: 100%; height: 100%; object-fit: cover; }
-        .tag-yeni { position: absolute; top: 6px; left: 6px; background-color: var(--green-tag); color: #fff; font-size: 9px; font-weight: bold; padding: 2px 5px; border-radius: 3px; }
-        .tag-bolum { position: absolute; top: 6px; right: 6px; background-color: rgba(0,0,0,0.6); color: #fff; font-size: 9px; padding: 2px 5px; border-radius: 3px; }
-        .fav-heart {
-            position: absolute;
-            bottom: 8px;
-            right: 8px;
-            background-color: rgba(0,0,0,0.5);
-            color: #fff;
-            width: 26px;
-            height: 26px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-        }
+        .tag-dil-en { background: #007bff; color: white; padding: 2px 6px; border-radius: 4px; font-size: 10px; position: absolute; top: 6px; left: 6px; z-index: 2; }
+        .tag-dil-tr { background: #dc3545; color: white; padding: 2px 6px; border-radius: 4px; font-size: 10px; position: absolute; top: 6px; left: 6px; z-index: 2; }
         .card-title { font-size: 12px; font-weight: 600; margin-top: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .card-brand { font-size: 10px; color: var(--gray-text); display: flex; align-items: center; gap: 4px; margin-top: 3px; }
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 60px;
-            background-color: #0a0a0a;
-            border-top: 1px solid #1a1a1a;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            z-index: 999;
-        }
-        .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--gray-text); text-decoration: none; font-size: 10px; gap: 4px; }
-        .nav-item.active { color: var(--primary-color); }
-        .nav-item i { font-size: 18px; }
+        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; height: 60px; background-color: #0a0a0a; display: flex; justify-content: space-around; align-items: center; z-index: 999; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--gray-text); text-decoration: none; font-size: 10px; }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="main-logo">SHORTMINIFLIX GLOBAL</div>
-</header>
+<header><div class="main-logo">SHORTMINIFLIX GLOBAL</div></header>
 
 <div id="featured-area"></div>
 
 <div class="section-box">
-    <div class="section-header">
-        <div class="section-title" style="color: #4df3a9;"><i class="fa-solid fa-wand-magic-sparkles"></i> Yeni Eklenenler</div>
-    </div>
+    <div class="section-header"><div class="section-title" style="color: #4df3a9;">Yeni Eklenenler</div></div>
     <div class="horizontal-scroll" id="yeni-eklenenler-list"></div>
 </div>
 
 <div class="section-box">
-    <div class="section-header">
-        <div class="section-title" style="color: #ff4545;"><i class="fa-solid fa-fire"></i> Popülerler</div>
-    </div>
+    <div class="section-header"><div class="section-title" style="color: #ff4545;">Popülerler</div></div>
     <div class="horizontal-scroll" id="populerler-list"></div>
 </div>
 
 <nav class="bottom-nav">
-    <a class="nav-item active"><i class="fa-solid fa-house"></i>Ev</a>
+    <a class="nav-item"><i class="fa-solid fa-house"></i>Ev</a>
     <a class="nav-item"><i class="fa-solid fa-magnifying-glass"></i>Arama</a>
-    <a class="nav-item"><i class="fa-solid fa-bullhorn"></i>Duyuru</a>
     <a class="nav-item"><i class="fa-solid fa-grid-2"></i>Keşfet</a>
-    <a class="nav-item"><i class="fa-solid fa-bars"></i>Menü</a>
 </nav>
 
 <script>
+    // Dizi verilerini tanımlarken 'dil' kısmını TR veya EN yapman yeterli
     const ONE_CIKAN_DIZI = {
-        baslik: "(Dublajlı) Cennetin Bahçesinden, Kıtlık Toprağına",
+        baslik: "Cennetin Bahçesinden, Kıtlık Toprağına",
         bolum: "Bölüm 32",
         afisUrl: "https://hdkore1.com/wp-content/uploads/2026/02/cennetin-bahcesinden-kitlik-topragina.webp",
         embedUrl: "https://vidmoly.me/embed-7w9nmz17w8np.html",
-        reklamUrl: ""
+        reklamUrl: "",
+        dil: "TR"
     };
 
     const YENI_EKLENENLER = [
-        { baslik: "(Dublajlı) Cennetin Bahçesinden, Kıtlık Toprağına", bolum: "Bölüm 32", marka: "HDKore", afisUrl: "https://hdkore1.com/wp-content/uploads/2026/02/cennetin-bahcesinden-kitlik-topragina.webp", embedUrl: "https://vidmoly.me/embed-7w9nmz17w8np.html", reklamUrl: "" },
-        { baslik: "(Dublajlı) Ölüm Kitabı İle Dünyaya Dönüş", bolum: "1. Bölüm", marka: "HDKore", afisUrl: "https://hdkore1.com/wp-content/uploads/2026/02/olum-kitabi-ile-dunyaya-donus.webp", embedUrl: "https://vidmoly.me/embed-80deayT19M.html", reklamUrl: "" },
-        { baslik: "(Dublajlı) Dövüş Sanatlarının Ünlü Ailesi Yiğit", bolum: "1. Bölüm", marka: "HDKore", afisUrl: "https://hdkore1.com/wp-content/uploads/2026/02/dovus-sanatlarinin-unlu-ailesi-yigit.webp", embedUrl: "https://vidmoly.me/embed-Njz7B_YvLWYWEM.html", reklamUrl: "" },
-        { baslik: "Hiç Ezilmeyen Daima Üstat", bolum: "1. Bölüm", marka: "HDKore", afisUrl: "https://hdkore1.com/wp-content/uploads/2026/02/hic-ezilmeyen-daima-ustat.webp", embedUrl: "https://vidmoly.me/embed-sN5TMawsjRwaTM.html", reklamUrl: "" },
-        { baslik: "(Dublajlı) Kadim Çağda Evlilik Sistemi", bolum: "1. Bölüm", marka: "HDKore", afisUrl: "https://hdkore1.com/wp-content/uploads/2026/02/kadim-cagda-evlilik-sistemi.webp", embedUrl: "https://vidmoly.me/embed-tA6lIwUQjRuTM.html", reklamUrl: "" }
+        { baslik: "Cennetin Bahçesinden", bolum: "Bölüm 32", afisUrl: "https://hdkore1.com/wp-content/uploads/2026/02/cennetin-bahcesinden-kitlik-topragina.webp", embedUrl: "#", dil: "TR" },
+        { baslik: "Return with Book", bolum: "Ep 1", afisUrl: "https://hdkore1.com/wp-content/uploads/2026/02/olum-kitabi-ile-dunyaya-donus.webp", embedUrl: "#", dil: "EN" }
     ];
 
-    const POPULERLER = YENI_EKLENENLER; // Şimdilik aynı listeyi gösteriyoruz
-
     function reklamliGit(reklamLinki, videoLinki, baslik) {
-        if(reklamLinki && reklamLinki !== '') { window.open(reklamLinki, '_blank'); }
-        let hedef = videoLinki.startsWith('http') ? `izle.html?title=${encodeURIComponent(baslik)}&vid=${encodeURIComponent(videoLinki)}` : videoLinki;
-        window.location.href = hedef;
+        if(reklamLinki) { window.open(reklamLinki, '_blank'); }
+        window.location.href = videoLinki;
     }
 
     document.getElementById('featured-area').innerHTML = `
         <div class="featured-container">
-            <img class="featured-banner" src="${ONE_CIKAN_DIZI.afisUrl}" alt="Öne Çıkan">
+            <img class="featured-banner" src="${ONE_CIKAN_DIZI.afisUrl}">
             <div class="featured-badge-row">
-                <span class="badge-db">HDKORE</span>
-                <span class="badge-new">YENİ</span>
+                <span class="badge-lang">${ONE_CIKAN_DIZI.dil}</span>
             </div>
-            <div class="featured-title">${ONE_CIKAN_DIZI.baslik} (${ONE_CIKAN_DIZI.bolum})</div>
-            <div class="featured-meta"><span>2026</span> &nbsp;•&nbsp; ${ONE_CIKAN_DIZI.bolum}</div>
+            <div class="featured-title">${ONE_CIKAN_DIZI.baslik}</div>
             <button class="watch-btn" onclick="reklamliGit('${ONE_CIKAN_DIZI.reklamUrl}', '${ONE_CIKAN_DIZI.embedUrl}', '${ONE_CIKAN_DIZI.baslik}')">
                 <i class="fa-solid fa-play"></i> Hemen İzle
             </button>
@@ -205,23 +89,21 @@
     function listeOlustur(dataArray, elementId) {
         let html = '';
         dataArray.forEach(item => {
+            const dilEtiketi = item.dil === 'EN' ? '<span class="tag-dil-en">EN</span>' : '<span class="tag-dil-tr">TR</span>';
             html += `
                 <div class="drama-card" onclick="reklamliGit('${item.reklamUrl}', '${item.embedUrl}', '${item.baslik}')">
                     <div class="image-wrapper">
-                        <span class="tag-yeni">YENİ</span>
-                        <span class="tag-bolum">${item.bolum}</span>
-                        <img class="card-thumb" src="${item.afisUrl}">
-                        <div class="fav-heart"><i class="fa-regular fa-heart"></i></div>
+                        ${dilEtiketi}
+                        <img class="card-thumb" src="${item.afisUrl}" onerror="this.src='https://via.placeholder.com/135x185?text=Poster'">
                     </div>
                     <div class="card-title">${item.baslik}</div>
-                    <div class="card-brand"><i class="fa-solid fa-clapperboard"></i> ${item.marka}</div>
                 </div>`;
         });
         document.getElementById(elementId).innerHTML = html;
     }
 
     listeOlustur(YENI_EKLENENLER, 'yeni-eklenenler-list');
-    listeOlustur(POPULERLER, 'populerler-list');
+    listeOlustur(YENI_EKLENENLER, 'populerler-list');
 </script>
 </body>
 </html>
