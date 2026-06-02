@@ -4,112 +4,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ShortMiniFlix Global</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --bg-color: #000000; --card-bg: #121212; --primary-color: #e50914; --text-color: #ffffff; --gray-text: #999999; --green-tag: #00b050; }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background-color: var(--bg-color); color: var(--text-color); font-family: sans-serif; padding-bottom: 80px; }
-        header { padding: 15px; text-align: center; }
-        .main-logo { font-size: 26px; font-weight: 900; color: var(--primary-color); letter-spacing: 1px; }
-        .featured-container { display: flex; flex-direction: column; align-items: center; padding: 10px 20px 25px 20px; text-align: center; }
-        .featured-banner { width: 220px; height: 290px; object-fit: cover; border-radius: 12px; margin-bottom: 15px; }
-        .featured-badge-row { display: flex; gap: 8px; margin-bottom: 10px; }
-        .badge-lang { background: var(--primary-color); color: #fff; padding: 3px 8px; font-size: 11px; border-radius: 4px; font-weight: bold; }
-        .featured-title { font-size: 20px; font-weight: 800; margin-bottom: 8px; }
-        .watch-btn { background-color: #ffffff; color: #000000; border: none; padding: 12px 35px; font-size: 15px; font-weight: bold; border-radius: 6px; cursor: pointer; display: flex; align-items: center; gap: 8px; }
-        .section-box { margin-bottom: 25px; padding-left: 15px; }
-        .section-header { margin-bottom: 12px; }
-        .section-title { font-size: 18px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
-        .horizontal-scroll { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
-        .drama-card { min-width: 135px; max-width: 135px; cursor: pointer; }
-        .image-wrapper { position: relative; width: 100%; height: 185px; border-radius: 8px; overflow: hidden; background-color: #222; }
-        .card-thumb { width: 100%; height: 100%; object-fit: cover; }
-        .tag-dil-en { background: #007bff; color: white; padding: 2px 6px; border-radius: 4px; font-size: 10px; position: absolute; top: 6px; left: 6px; z-index: 2; }
-        .tag-dil-tr { background: #dc3545; color: white; padding: 2px 6px; border-radius: 4px; font-size: 10px; position: absolute; top: 6px; left: 6px; z-index: 2; }
-        .card-title { font-size: 12px; font-weight: 600; margin-top: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; height: 60px; background-color: #0a0a0a; display: flex; justify-content: space-around; align-items: center; z-index: 999; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--gray-text); text-decoration: none; font-size: 10px; }
+        body { background: #000; color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 20px; }
+        header { text-align: center; color: #e50914; font-size: 28px; font-weight: 800; margin-bottom: 20px; }
+        .section-title { color: #fff; margin-top: 30px; border-left: 4px solid #e50914; padding-left: 10px; }
+        .scroll { display: flex; gap: 15px; overflow-x: auto; padding: 10px 0; }
+        .card { min-width: 140px; cursor: pointer; transition: transform 0.2s; }
+        .card:hover { transform: scale(1.05); }
+        .card img { width: 100%; border-radius: 10px; }
+        .card p { font-size: 14px; text-align: center; margin-top: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        #player-area { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); display: none; z-index: 9999; }
+        .close-btn { position: absolute; top: 20px; right: 20px; color: #fff; font-size: 30px; cursor: pointer; }
     </style>
 </head>
 <body>
 
-<header><div class="main-logo">SHORTMINIFLIX GLOBAL</div></header>
+<header>SHORTMINIFLIX GLOBAL</header>
+<div id="content"></div>
 
-<div id="featured-area"></div>
-
-<div class="section-box">
-    <div class="section-header"><div class="section-title" style="color: #4df3a9;">Yeni Eklenenler</div></div>
-    <div class="horizontal-scroll" id="yeni-eklenenler-list"></div>
+<div id="player-area">
+    <span class="close-btn" onclick="document.getElementById('player-area').style.display='none'">&times;</span>
+    <iframe id="video-frame" width="100%" height="90%" style="margin-top:5%" frameborder="0" allowfullscreen></iframe>
 </div>
-
-<div class="section-box">
-    <div class="section-header"><div class="section-title" style="color: #ff4545;">Popülerler</div></div>
-    <div class="horizontal-scroll" id="populerler-list"></div>
-</div>
-
-<nav class="bottom-nav">
-    <a class="nav-item"><i class="fa-solid fa-house"></i>Ev</a>
-    <a class="nav-item"><i class="fa-solid fa-magnifying-glass"></i>Arama</a>
-    <a class="nav-item"><i class="fa-solid fa-grid-2"></i>Keşfet</a>
-</nav>
 
 <script>
-    const ONE_CIKAN_DIZI = {
-        baslik: "Cennetin Bahçesinden, Kıtlık Toprağına",
-        bolum: "FULL",
-        afisUrl: "https://awscover.netshort.com/tos-vod-mya-v-da59d5a2040f5f77/coverG/prod/1351450106_%E8%8D%92%E5%B9%B4%E9%87%8D%E7%94%9F%EF%BC%8C%E6%88%91%E7%94%A8%E7%A5%9E%E5%86%9C%E5%AE%9D%E7%93%B6%E5%85%BB%E5%85%A8%E5%AE%B6%E5%9C%9F%E8%AF%AD.jpg~tplv-vod-noop.image",
-        embedUrl: "https://vkvideo.ru/video581224883_456239017",
-        reklamUrl: "",
-        dil: "TR"
-    };
+    const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6wWAZd3zUj5UqzxkX2ln7hOq1DwjTNCaNOfudPbuUPHzzd4GQZVM_V9tX8Li6nG_gC88eFm42tJmg/pub?output=csv";
 
-    const YENI_EKLENENLER = [
-        { 
-            baslik: "Cennetin Bahçesinden, Kıtlık Toprağına", 
-            bolum: "FULL", 
-            afisUrl: "https://awscover.netshort.com/tos-vod-mya-v-da59d5a2040f5f77/coverG/prod/1351450106_%E8%8D%92%E5%B9%B4%E9%87%8D%E7%94%9F%EF%BC%8C%E6%88%91%E7%94%A8%E7%A5%9E%E5%86%9C%E5%AE%9D%E7%93%B6%E5%85%BB%E5%85%A8%E5%AE%B6%E5%9C%9F%E8%AF%AD.jpg~tplv-vod-noop.image", 
-            embedUrl: "https://vkvideo.ru/video581224883_456239017", 
-            reklamUrl: "", 
-            dil: "TR" 
-        }
-    ];
+    async function loadData() {
+        const response = await fetch(csvUrl);
+        const data = await response.text();
+        const rows = data.split('\n').slice(1);
+        
+        let categories = {};
 
-    function reklamliGit(reklamLinki, videoLinki, baslik) {
-        if(reklamLinki) { window.open(reklamLinki, '_blank'); }
-        // VK iframe'i engellediği için doğrudan yönlendirme yapıyoruz
-        window.open(videoLinki, '_blank');
-    }
-
-    document.getElementById('featured-area').innerHTML = `
-        <div class="featured-container">
-            <img class="featured-banner" src="${ONE_CIKAN_DIZI.afisUrl}">
-            <div class="featured-badge-row">
-                <span class="badge-lang">${ONE_CIKAN_DIZI.dil}</span>
-            </div>
-            <div class="featured-title">${ONE_CIKAN_DIZI.baslik}</div>
-            <button class="watch-btn" onclick="reklamliGit('${ONE_CIKAN_DIZI.reklamUrl}', '${ONE_CIKAN_DIZI.embedUrl}', '${ONE_CIKAN_DIZI.baslik}')">
-                <i class="fa-solid fa-play"></i> Hemen İzle
-            </button>
-        </div>`;
-
-    function listeOlustur(dataArray, elementId) {
-        let html = '';
-        dataArray.forEach(item => {
-            const dilEtiketi = item.dil === 'EN' ? '<span class="tag-dil-en">EN</span>' : '<span class="tag-dil-tr">TR</span>';
-            html += `
-                <div class="drama-card" onclick="reklamliGit('${item.reklamUrl}', '${item.embedUrl}', '${item.baslik}')">
-                    <div class="image-wrapper">
-                        ${dilEtiketi}
-                        <img class="card-thumb" src="${item.afisUrl}" onerror="this.src='https://via.placeholder.com/135x185?text=Poster'">
-                    </div>
-                    <div class="card-title">${item.baslik}</div>
-                </div>`;
+        rows.forEach(row => {
+            const [name, link, poster, category] = row.split(',');
+            if(!name || !category) return;
+            
+            const cat = category.trim();
+            if(!categories[cat]) categories[cat] = [];
+            categories[cat].push({name, link, poster});
         });
-        document.getElementById(elementId).innerHTML = html;
+
+        const content = document.getElementById('content');
+        for(const cat in categories) {
+            content.innerHTML += `<h3 class="section-title">${cat}</h3><div class="scroll" id="${cat}-list"></div>`;
+            categories[cat].forEach(film => {
+                document.getElementById(cat + '-list').innerHTML += `
+                    <div class="card" onclick="play('${film.link}')">
+                        <img src="${film.poster}" loading="lazy">
+                        <p>${film.name}</p>
+                    </div>`;
+            });
+        }
     }
 
-    listeOlustur(YENI_EKLENENLER, 'yeni-eklenenler-list');
-    listeOlustur(YENI_EKLENENLER, 'populerler-list');
+    function play(link) {
+        document.getElementById('video-frame').src = link;
+        document.getElementById('player-area').style.display = 'block';
+    }
+
+    loadData();
 </script>
 </body>
 </html>
