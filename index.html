@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ShortMiniFlix Global</title>
-    <!-- İkonlar için FontAwesome ekledik patron -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-weight/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -15,17 +14,14 @@
             --gray-text: #999999;
             --green-tag: #00b050;
         }
-
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            padding-bottom: 80px; /* Alt menü kapanmasın diye alan */
+            padding-bottom: 80px;
             overflow-x: hidden;
         }
-
-        /* Üst Logo Alanı */
         header {
             padding: 15px;
             text-align: center;
@@ -37,8 +33,6 @@
             color: var(--primary-color);
             letter-spacing: 1px;
         }
-
-        /* Büyük Öne Çıkan Dizi Alanı */
         .featured-container {
             display: flex;
             flex-direction: column;
@@ -55,11 +49,7 @@
             box-shadow: 0 8px 25px rgba(229, 9, 20, 0.15);
             margin-bottom: 15px;
         }
-        .featured-badge-row {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 10px;
-        }
+        .featured-badge-row { display: flex; gap: 8px; margin-bottom: 10px; }
         .badge-db { background: #333; color: #fff; padding: 3px 8px; font-size: 11px; border-radius: 4px; font-weight: bold; }
         .badge-new { background: var(--primary-color); color: #fff; padding: 3px 8px; font-size: 11px; border-radius: 4px; font-weight: bold; }
         .featured-title { font-size: 20px; font-weight: 800; margin-bottom: 8px; max-width: 90%; line-height: 1.3; }
@@ -79,8 +69,6 @@
             gap: 8px;
             box-shadow: 0 4px 10px rgba(255,255,255,0.2);
         }
-
-        /* Sağa Doğru Kaydırılabilir Sıralı Bölümler */
         .section-box { margin-bottom: 25px; padding-left: 15px; }
         .section-header {
             display: flex;
@@ -90,26 +78,16 @@
             margin-bottom: 12px;
         }
         .section-title { font-size: 18px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
-        .section-title i { font-size: 16px; }
         .view-all { color: var(--gray-text); font-size: 12px; text-decoration: none; display: flex; align-items: center; gap: 3px; }
-
         .horizontal-scroll {
             display: flex;
             gap: 12px;
             overflow-x: auto;
             padding-bottom: 10px;
-            scrollbar-width: none; /* Firefox gizleme */
+            scrollbar-width: none;
         }
-        .horizontal-scroll::-webkit-scrollbar { display: none; } /* Chrome gizleme */
-
-        /* Afiş Kart Yapısı */
-        .drama-card {
-            min-width: 135px;
-            max-width: 135px;
-            display: flex;
-            flex-direction: column;
-            cursor: pointer;
-        }
+        .horizontal-scroll::-webkit-scrollbar { display: none; }
+        .drama-card { min-width: 135px; max-width: 135px; display: flex; flex-direction: column; cursor: pointer; }
         .image-wrapper {
             position: relative;
             width: 100%;
@@ -119,14 +97,10 @@
             background-color: #222;
         }
         .card-thumb { width: 100%; height: 100%; object-fit: cover; }
-        
-        /* Kart Üzerindeki Etiketler */
         .tag-yeni { position: absolute; top: 6px; left: 6px; background-color: var(--green-tag); color: #fff; font-size: 9px; font-weight: bold; padding: 2px 5px; border-radius: 3px; }
         .tag-bolum { position: absolute; top: 6px; right: 6px; background-color: rgba(0,0,0,0.6); color: #fff; font-size: 9px; padding: 2px 5px; border-radius: 3px; }
         .tag-populer { position: absolute; top: 22px; left: 6px; background-color: var(--primary-color); color: #fff; font-size: 9px; font-weight: bold; padding: 2px 5px; border-radius: 3px; }
         .tag-dublaj { position: absolute; top: 38px; left: 6px; background-color: #2463eb; color: #fff; font-size: 9px; font-weight: bold; padding: 2px 5px; border-radius: 3px; }
-        
-        /* Kalp Butonu */
         .fav-heart {
             position: absolute;
             bottom: 8px;
@@ -141,13 +115,8 @@
             justify-content: center;
             font-size: 12px;
         }
-
-        /* Kart Altı Yazıları */
         .card-title { font-size: 12px; font-weight: 600; margin-top: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .card-brand { font-size: 10px; color: var(--gray-text); display: flex; align-items: center; gap: 4px; margin-top: 3px; }
-        .card-brand i { font-size: 10px; }
-
-        /* Sabit Alt Navigasyon Barı */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -161,16 +130,7 @@
             align-items: center;
             z-index: 999;
         }
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: var(--gray-text);
-            text-decoration: none;
-            font-size: 10px;
-            gap: 4px;
-            cursor: pointer;
-        }
+        .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--gray-text); text-decoration: none; font-size: 10px; gap: 4px; }
         .nav-item.active { color: var(--primary-color); }
         .nav-item i { font-size: 18px; }
     </style>
@@ -181,134 +141,25 @@
     <div class="main-logo">SHORTMINIFLIX GLOBAL</div>
 </header>
 
-<!-- ÖNE ÇIKAN BÜYÜK AFİŞ -->
-<div class="featured-container">
-    <img class="featured-banner" src="https://picsum.photos/400/600?random=99" alt="Öne Çıkan">
-    <div class="featured-badge-row">
-        <span class="badge-db"><i class="fa-solid"></i> HDKORE</span>
-        <span class="badge-new">YENİ</span>
-    </div>
-    <div class="featured-title">(Dublajlı) Cennetin Bahçesinden, Kıtlık Toprağına (Bölüm 32)</div>
-    <div class="featured-meta"><span>2026</span> &nbsp;•&nbsp; Bölüm 32</div>
-    <!-- OYNATMA BUTONUNA GİZLİ VİDMOLY LİNKİNİ GÖMDÜK PATRON -->
-    <button class="watch-btn" onclick="reklamliGit('', 'izle.html?title=Cennetin%20Bahcesinden%20Kitlik%20Topragina&vid=https%3A%2F%2Fvidmoly.me%2Fembed-7w9nmz17w8np.html')">
-        <i class="fa-solid fa-play"></i> Hemen İzle
-    </button>
-</div>
+<!-- SİTE İÇERİĞİ OTOMATİK JENERE EDİLECEK ALANLAR -->
+<div id="featured-area"></div>
 
-<!-- YENİ EKLENENLER -->
 <div class="section-box">
     <div class="section-header">
         <div class="section-title" style="color: #4df3a9;"><i class="fa-solid fa-wand-magic-sparkles"></i> Yeni Eklenenler</div>
         <a href="#" class="view-all">Tümünü Gör <i class="fa-solid fa-chevron-right"></i></a>
     </div>
-    <div class="horizontal-scroll">
-        <!-- Kart 1 -->
-        <div class="drama-card" onclick="reklamliGit('https://reklam-linkin.com', 'kuma.html')">
-            <div class="image-wrapper">
-                <span class="tag-yeni">YENİ</span>
-                <span class="tag-bolum">69 Bölüm</span>
-                <img class="card-thumb" src="https://picsum.photos/300/450?random=1">
-                <div class="fav-heart"><i class="fa-regular fa-heart"></i></div>
-            </div>
-            <div class="card-title">Beni Kuma Yaptı, Krala Kraliçe Oldum</div>
-            <div class="card-brand"><i class="fa-solid fa-clapperboard"></i> StarDust</div>
-        </div>
-        <!-- Kart 2 -->
-        <div class="drama-card" onclick="reklamliGit('https://reklam-linkin.com', 'taoist.html')">
-            <div class="image-wrapper">
-                <span class="tag-yeni">YENİ</span>
-                <span class="tag-bolum">52 Bölüm</span>
-                <img class="card-thumb" src="https://picsum.photos/300/450?random=2">
-                <div class="fav-heart"><i class="fa-regular fa-heart"></i></div>
-            </div>
-            <div class="card-title">Taoist, Senin Bebeğini Taşıyorum</div>
-            <div class="card-brand"><i class="fa-solid fa-clapperboard"></i> DramaWave</div>
-        </div>
-        <!-- Kart 3 -->
-        <div class="drama-card" onclick="reklamliGit('https://reklam-linkin.com', 'tren.html')">
-            <div class="image-wrapper">
-                <span class="tag-yeni">YENİ</span>
-                <span class="tag-bolum">50 Bölüm</span>
-                <img class="card-thumb" src="https://picsum.photos/300/450?random=3">
-                <div class="fav-heart"><i class="fa-regular fa-heart"></i></div>
-            </div>
-            <div class="card-title">Tren Krizi: Geleceği Tersine Çevir</div>
-            <div class="card-brand"><i class="fa-solid fa-clapperboard"></i> DramaWave</div>
-        </div>
-    </div>
+    <div class="horizontal-scroll" id="yeni-eklenenler-list"></div>
 </div>
 
-<!-- POPÜLERLER -->
 <div class="section-box">
     <div class="section-header">
         <div class="section-title" style="color: #ff4545;"><i class="fa-solid fa-fire"></i> Popülerler</div>
         <a href="#" class="view-all">Tümünü Gör <i class="fa-solid fa-chevron-right"></i></a>
     </div>
-    <div class="horizontal-scroll">
-        <!-- Kart 1 - BURAYI DA YENİ DİZİMİZE BAĞLADIK PATRON -->
-        <div class="drama-card" onclick="reklamliGit('', 'izle.html?title=Cennetin%20Bahcesinden%20Kitlik%20Topragina&vid=https%3A%2F%2Fvidmoly.me%2Fembed-7w9nmz17w8np.html')">
-            <div class="image-wrapper">
-                <span class="tag-yeni">YENİ</span>
-                <span class="tag-populer">POPÜLER</span>
-                <span class="tag-dublaj">Dublajlı</span>
-                <span class="tag-bolum">Ep 32</span>
-                <img class="card-thumb" src="https://picsum.photos/300/450?random=4">
-                <div class="fav-heart"><i class="fa-regular fa-heart"></i></div>
-            </div>
-            <div class="card-title">(Dublajlı) Cennetin Bahçesinden Kıtlık Toprağına</div>
-            <div class="card-brand"><i class="fa-solid fa-clapperboard"></i> HDKore</div>
-        </div>
-        <!-- Kart 2 -->
-        <div class="drama-card" onclick="reklamliGit('https://reklam-linkin.com', 'gucun-ve-askin.html')">
-            <div class="image-wrapper">
-                <span class="tag-yeni">YENİ</span>
-                <span class="tag-populer">POPÜLER</span>
-                <span class="tag-dublaj">Dublajlı</span>
-                <span class="tag-bolum">61 Bölüm</span>
-                <img class="card-thumb" src="https://picsum.photos/300/450?random=5">
-                <div class="fav-heart"><i class="fa-regular fa-heart"></i></div>
-            </div>
-            <div class="card-title">[Dublajlı] Gücün ve Aşkın Arasında</div>
-            <div class="card-brand"><i class="fa-solid fa-clapperboard"></i> ShortMax</div>
-        </div>
-        <!-- Kart 3 -->
-        <div class="drama-card" onclick="reklamliGit('https://reklam-linkin.com', 'sans-bana.html')">
-            <div class="image-wrapper">
-                <span class="tag-yeni">YENİ</span>
-                <span class="tag-populer">POPÜLER</span>
-                <span class="tag-dublaj">Dublajlı</span>
-                <span class="tag-bolum">100 Bölüm</span>
-                <img class="card-thumb" src="https://picsum.photos/300/450?random=6">
-                <div class="fav-heart"><i class="fa-regular fa-heart"></i></div>
-            </div>
-            <div class="card-title">Şans Bana Dokundu</div>
-            <div class="card-brand"><i class="fa-solid fa-clapperboard"></i> DramaWave</div>
-        </div>
-    </div>
+    <div class="horizontal-scroll" id="populerler-list"></div>
 </div>
 
-<!-- VIBESHORT DİZİLERİ -->
-<div class="section-box">
-    <div class="section-header">
-        <div class="section-title"><i class="fa-solid fa-video" style="color: #2463eb;"></i> VibeShort Dizileri</div>
-        <a href="#" class="view-all">Tümünü Gör <i class="fa-solid fa-chevron-right"></i></a>
-    </div>
-    <div class="horizontal-scroll">
-        <div class="drama-card" onclick="reklamliGit('https://reklam-linkin.com', 'guc-oyunu.html')">
-            <div class="image-wrapper">
-                <span class="tag-yeni">YENİ</span>
-                <span class="tag-bolum">65 Bölüm</span>
-                <img class="card-thumb" src="https://picsum.photos/300/450?random=7">
-                <div class="fav-heart"><i class="fa-regular fa-heart"></i></div>
-            </div>
-            <div class="card-title">Güç Oyunu</div>
-            <div class="card-brand"><i class="fa-solid fa-clapperboard"></i> VibeShort</div>
-        </div>
-    </div>
-</div>
-
-<!-- SABİT MOBİL ALT MENÜ -->
 <nav class="bottom-nav">
     <a class="nav-item active"><i class="fa-solid fa-house"></i>Ev</a>
     <a class="nav-item"><i class="fa-solid fa-magnifying-glass"></i>Arama</a>
@@ -318,14 +169,79 @@
 </nav>
 
 <script>
-    // Tıklanınca arka sekmede reklam açıp ön planda izleme sayfasına götüren fonksiyon patron
-    function reklamliGit(reklamLinki, hedefSayfa) {
-        if(reklamLinki && reklamLinki !== '') {
-            window.open(reklamLinki, '_blank');
-        }
-        window.location.href = hedefSayfa;
-    }
-</script>
+    // ==========================================
+    // 🛠️ PATRONUN DÜKKAN YÖNETİM MASASI (BURADAN DÜZENLE)
+    // ==========================================
+    
+    // BURASI EN ÜSTTEKİ BÜYÜK AFİŞ ALANI OLAN DİZİ
+    const ONE_CIKAN_DIZI = {
+        baslik: "(Dublajlı) Cennetin Bahçesinden, Kıtlık Toprağına",
+        bolum: "Bölüm 32",
+        afisUrl: "https://hdkore1.com/wp-content/uploads/2026/02/cennetin-bahcesinden-kitlik-topragina.webp",
+        embedUrl: "https://vidmoly.me/embed-7w9nmz17w8np.html",
+        reklamUrl: "" // Reklam istemiyorsan boş bırak patron
+    };
 
+    // BURASI DA AŞAĞIDAKİ YENİ EKLENENLER LİSTESİ
+    const YENI_EKLENENLER = [
+        { baslik: "Beni Kuma Yaptı, Krala Kraliçe Oldum", bolum: "69 Bölüm", marka: "StarDust", afisUrl: "https://picsum.photos/300/450?random=1", embedUrl: "kuma.html", reklamUrl: "https://reklam-linkin.com" },
+        { baslik: "Taoist, Senin Bebeğini Taşıyorum", bolum: "52 Bölüm", marka: "DramaWave", afisUrl: "https://picsum.photos/300/450?random=2", embedUrl: "taoist.html", reklamUrl: "https://reklam-linkin.com" },
+        { baslik: "Tren Krizi: Geleceği Tersine Çevir", bolum: "50 Bölüm", marka: "DramaWave", afisUrl: "https://picsum.photos/300/450?random=3", embedUrl: "tren.html", reklamUrl: "https://reklam-linkin.com" }
+    ];
+
+    // BURASI DA POPÜLERLER LİSTESİ
+    const POPULERLER = [
+        { baslik: "(Dublajlı) Cennetin Bahçesinden Kıtlık Toprağına", bolum: "Ep 32", marka: "HDKore", afisUrl: "https://hdkore1.com/wp-content/uploads/2026/02/cennetin-bahcesinden-kitlik-topragina.webp", embedUrl: "https://vidmoly.me/embed-7w9nmz17w8np.html", reklamUrl: "" },
+        { baslik: "[Dublajlı] Gücün ve Aşkın Arasında", bolum: "61 Bölüm", marka: "ShortMax", afisUrl: "https://picsum.photos/300/450?random=5", embedUrl: "gucun-ve-askin.html", reklamUrl: "https://reklam-linkin.com" },
+        { baslik: "Şans Bana Dokundu", bolum: "100 Bölüm", marka: "DramaWave", afisUrl: "https://picsum.photos/300/450?random=6", embedUrl: "sans-bana.html", reklamUrl: "https://reklam-linkin.com" }
+    ];
+
+    // ==========================================
+    // ⚙️ SİTENİN MOTOR KODLARI (BURAYA HİÇ DOKUNMA PATRON)
+    // ==========================================
+    
+    function reklamliGit(reklamLinki, videoLinki, baslik) {
+        if(reklamLinki && reklamLinki !== '') { window.open(reklamLinki, '_blank'); }
+        let hedef = videoLinki.startsWith('http') ? `izle.html?title=${encodeURIComponent(baslik)}&vid=${encodeURIComponent(videoLinki)}` : videoLinki;
+        window.location.href = hedef;
+    }
+
+    // Büyük afişi ekrana bas
+    document.getElementById('featured-area').innerHTML = `
+        <div class="featured-container">
+            <img class="featured-banner" src="${ONE_CIKAN_DIZI.afisUrl}" alt="Öne Çıkan">
+            <div class="featured-badge-row">
+                <span class="badge-db">HDKORE</span>
+                <span class="badge-new">YENİ</span>
+            </div>
+            <div class="featured-title">${ONE_CIKAN_DIZI.baslik} (${ONE_CIKAN_DIZI.bolum})</div>
+            <div class="featured-meta"><span>2026</span> &nbsp;•&nbsp; ${ONE_CIKAN_DIZI.bolum}</div>
+            <button class="watch-btn" onclick="reklamliGit('${ONE_CIKAN_DIZI.reklamUrl}', '${ONE_CIKAN_DIZI.embedUrl}', '${ONE_CIKAN_DIZI.baslik}')">
+                <i class="fa-solid fa-play"></i> Hemen İzle
+            </button>
+        </div>`;
+
+    // Listeleri ekrana bas
+    function listeOlustur(dataArray, elementId) {
+        let html = '';
+        dataArray.forEach(item => {
+            html += `
+                <div class="drama-card" onclick="reklamliGit('${item.reklamUrl}', '${item.embedUrl}', '${item.baslik}')">
+                    <div class="image-wrapper">
+                        <span class="tag-yeni">YENİ</span>
+                        <span class="tag-bolum">${item.bolum}</span>
+                        <img class="card-thumb" src="${item.afisUrl}">
+                        <div class="fav-heart"><i class="fa-regular fa-heart"></i></div>
+                    </div>
+                    <div class="card-title">${item.baslik}</div>
+                    <div class="card-brand"><i class="fa-solid fa-clapperboard"></i> ${item.marka}</div>
+                </div>`;
+        });
+        document.getElementById(elementId).innerHTML = html;
+    }
+
+    listeOlustur(YENI_EKLENENLER, 'yeni-eklenenler-list');
+    listeOlustur(POPULERLER, 'populerler-list');
+</script>
 </body>
 </html>
