@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ShortMiniFlix Global</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-weight/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --bg-color: #000000;
@@ -99,8 +99,6 @@
         .card-thumb { width: 100%; height: 100%; object-fit: cover; }
         .tag-yeni { position: absolute; top: 6px; left: 6px; background-color: var(--green-tag); color: #fff; font-size: 9px; font-weight: bold; padding: 2px 5px; border-radius: 3px; }
         .tag-bolum { position: absolute; top: 6px; right: 6px; background-color: rgba(0,0,0,0.6); color: #fff; font-size: 9px; padding: 2px 5px; border-radius: 3px; }
-        .tag-populer { position: absolute; top: 22px; left: 6px; background-color: var(--primary-color); color: #fff; font-size: 9px; font-weight: bold; padding: 2px 5px; border-radius: 3px; }
-        .tag-dublaj { position: absolute; top: 38px; left: 6px; background-color: #2463eb; color: #fff; font-size: 9px; font-weight: bold; padding: 2px 5px; border-radius: 3px; }
         .fav-heart {
             position: absolute;
             bottom: 8px;
@@ -141,13 +139,11 @@
     <div class="main-logo">SHORTMINIFLIX GLOBAL</div>
 </header>
 
-<!-- SİTE İÇERİĞİ OTOMATİK JENERE EDİLECEK ALANLAR -->
 <div id="featured-area"></div>
 
 <div class="section-box">
     <div class="section-header">
         <div class="section-title" style="color: #4df3a9;"><i class="fa-solid fa-wand-magic-sparkles"></i> Yeni Eklenenler</div>
-        <a href="#" class="view-all">Tümünü Gör <i class="fa-solid fa-chevron-right"></i></a>
     </div>
     <div class="horizontal-scroll" id="yeni-eklenenler-list"></div>
 </div>
@@ -155,7 +151,6 @@
 <div class="section-box">
     <div class="section-header">
         <div class="section-title" style="color: #ff4545;"><i class="fa-solid fa-fire"></i> Popülerler</div>
-        <a href="#" class="view-all">Tümünü Gör <i class="fa-solid fa-chevron-right"></i></a>
     </div>
     <div class="horizontal-scroll" id="populerler-list"></div>
 </div>
@@ -169,44 +164,30 @@
 </nav>
 
 <script>
-    // ==========================================
-    // 🛠️ PATRONUN DÜKKAN YÖNETİM MASASI (BURADAN DÜZENLE)
-    // ==========================================
-    
-    // BURASI EN ÜSTTEKİ BÜYÜK AFİŞ ALANI OLAN DİZİ
     const ONE_CIKAN_DIZI = {
         baslik: "(Dublajlı) Cennetin Bahçesinden, Kıtlık Toprağına",
         bolum: "Bölüm 32",
         afisUrl: "https://hdkore1.com/wp-content/uploads/2026/02/cennetin-bahcesinden-kitlik-topragina.webp",
         embedUrl: "https://vidmoly.me/embed-7w9nmz17w8np.html",
-        reklamUrl: "" // Reklam istemiyorsan boş bırak patron
+        reklamUrl: ""
     };
 
-    // BURASI DA AŞAĞIDAKİ YENİ EKLENENLER LİSTESİ
     const YENI_EKLENENLER = [
-        { baslik: "Beni Kuma Yaptı, Krala Kraliçe Oldum", bolum: "69 Bölüm", marka: "StarDust", afisUrl: "https://picsum.photos/300/450?random=1", embedUrl: "kuma.html", reklamUrl: "https://reklam-linkin.com" },
-        { baslik: "Taoist, Senin Bebeğini Taşıyorum", bolum: "52 Bölüm", marka: "DramaWave", afisUrl: "https://picsum.photos/300/450?random=2", embedUrl: "taoist.html", reklamUrl: "https://reklam-linkin.com" },
-        { baslik: "Tren Krizi: Geleceği Tersine Çevir", bolum: "50 Bölüm", marka: "DramaWave", afisUrl: "https://picsum.photos/300/450?random=3", embedUrl: "tren.html", reklamUrl: "https://reklam-linkin.com" }
+        { baslik: "(Dublajlı) Cennetin Bahçesinden, Kıtlık Toprağına", bolum: "Bölüm 32", marka: "HDKore", afisUrl: "https://hdkore1.com/wp-content/uploads/2026/02/cennetin-bahcesinden-kitlik-topragina.webp", embedUrl: "https://vidmoly.me/embed-7w9nmz17w8np.html", reklamUrl: "" },
+        { baslik: "(Dublajlı) Ölüm Kitabı İle Dünyaya Dönüş", bolum: "1. Bölüm", marka: "HDKore", afisUrl: "https://hdkore1.com/wp-content/uploads/2026/02/olum-kitabi-ile-dunyaya-donus.webp", embedUrl: "https://vidmoly.me/embed-80deayT19M.html", reklamUrl: "" },
+        { baslik: "(Dublajlı) Dövüş Sanatlarının Ünlü Ailesi Yiğit", bolum: "1. Bölüm", marka: "HDKore", afisUrl: "https://hdkore1.com/wp-content/uploads/2026/02/dovus-sanatlarinin-unlu-ailesi-yigit.webp", embedUrl: "https://vidmoly.me/embed-Njz7B_YvLWYWEM.html", reklamUrl: "" },
+        { baslik: "Hiç Ezilmeyen Daima Üstat", bolum: "1. Bölüm", marka: "HDKore", afisUrl: "https://hdkore1.com/wp-content/uploads/2026/02/hic-ezilmeyen-daima-ustat.webp", embedUrl: "https://vidmoly.me/embed-sN5TMawsjRwaTM.html", reklamUrl: "" },
+        { baslik: "(Dublajlı) Kadim Çağda Evlilik Sistemi", bolum: "1. Bölüm", marka: "HDKore", afisUrl: "https://hdkore1.com/wp-content/uploads/2026/02/kadim-cagda-evlilik-sistemi.webp", embedUrl: "https://vidmoly.me/embed-tA6lIwUQjRuTM.html", reklamUrl: "" }
     ];
 
-    // BURASI DA POPÜLERLER LİSTESİ
-    const POPULERLER = [
-        { baslik: "(Dublajlı) Cennetin Bahçesinden Kıtlık Toprağına", bolum: "Ep 32", marka: "HDKore", afisUrl: "https://hdkore1.com/wp-content/uploads/2026/02/cennetin-bahcesinden-kitlik-topragina.webp", embedUrl: "https://vidmoly.me/embed-7w9nmz17w8np.html", reklamUrl: "" },
-        { baslik: "[Dublajlı] Gücün ve Aşkın Arasında", bolum: "61 Bölüm", marka: "ShortMax", afisUrl: "https://picsum.photos/300/450?random=5", embedUrl: "gucun-ve-askin.html", reklamUrl: "https://reklam-linkin.com" },
-        { baslik: "Şans Bana Dokundu", bolum: "100 Bölüm", marka: "DramaWave", afisUrl: "https://picsum.photos/300/450?random=6", embedUrl: "sans-bana.html", reklamUrl: "https://reklam-linkin.com" }
-    ];
+    const POPULERLER = YENI_EKLENENLER; // Şimdilik aynı listeyi gösteriyoruz
 
-    // ==========================================
-    // ⚙️ SİTENİN MOTOR KODLARI (BURAYA HİÇ DOKUNMA PATRON)
-    // ==========================================
-    
     function reklamliGit(reklamLinki, videoLinki, baslik) {
         if(reklamLinki && reklamLinki !== '') { window.open(reklamLinki, '_blank'); }
         let hedef = videoLinki.startsWith('http') ? `izle.html?title=${encodeURIComponent(baslik)}&vid=${encodeURIComponent(videoLinki)}` : videoLinki;
         window.location.href = hedef;
     }
 
-    // Büyük afişi ekrana bas
     document.getElementById('featured-area').innerHTML = `
         <div class="featured-container">
             <img class="featured-banner" src="${ONE_CIKAN_DIZI.afisUrl}" alt="Öne Çıkan">
@@ -221,7 +202,6 @@
             </button>
         </div>`;
 
-    // Listeleri ekrana bas
     function listeOlustur(dataArray, elementId) {
         let html = '';
         dataArray.forEach(item => {
