@@ -1,4 +1,4 @@
-        <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
@@ -38,7 +38,7 @@
             letter-spacing: 1px;
         }
 
-        /* 623298.jpg - Büyük Öne Çıkan Dizi Alanı */
+        /* Büyük Öne Çıkan Dizi Alanı */
         .featured-container {
             display: flex;
             flex-direction: column;
@@ -80,7 +80,7 @@
             box-shadow: 0 4px 10px rgba(255,255,255,0.2);
         }
 
-        /* Sağa Doğru Kaydırılabilir Sıralı Bölümler (623299.jpg / 623300.jpg) */
+        /* Sağa Doğru Kaydırılabilir Sıralı Bölümler */
         .section-box { margin-bottom: 25px; padding-left: 15px; }
         .section-header {
             display: flex;
@@ -102,7 +102,7 @@
         }
         .horizontal-scroll::-webkit-scrollbar { display: none; } /* Chrome gizleme */
 
-        /* Afiş Kart Yapısı (Birebir Görseldeki Gibi) */
+        /* Afiş Kart Yapısı */
         .drama-card {
             min-width: 135px;
             max-width: 135px;
@@ -147,7 +147,7 @@
         .card-brand { font-size: 10px; color: var(--gray-text); display: flex; align-items: center; gap: 4px; margin-top: 3px; }
         .card-brand i { font-size: 10px; }
 
-        /* 623299.jpg - Sabit Alt Navigasyon Barı */
+        /* Sabit Alt Navigasyon Barı */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -181,21 +181,22 @@
     <div class="main-logo">SHORTMINIFLIX GLOBAL</div>
 </header>
 
-<!-- ÖNE ÇIKAN BÜYÜK AFİŞ (623298.jpg) -->
+<!-- ÖNE ÇIKAN BÜYÜK AFİŞ -->
 <div class="featured-container">
     <img class="featured-banner" src="https://picsum.photos/400/600?random=99" alt="Öne Çıkan">
     <div class="featured-badge-row">
-        <span class="badge-db"><i class="fa-solid :"></i> DRAMABOX</span>
+        <span class="badge-db"><i class="fa-solid"></i> HDKORE</span>
         <span class="badge-new">YENİ</span>
     </div>
-    <div class="featured-title">(Dublajlı) Unutulmuş Kalkan: Eren Ulu'nun Sırrı</div>
-    <div class="featured-meta"><span>2026</span> &nbsp;•&nbsp; 65 Bölümler</div>
-    <button class="watch-btn" onclick="reklamliGit('https://reklam-linkin.com', 'unutulmus-kalkan.html')">
+    <div class="featured-title">(Dublajlı) Cennetin Bahçesinden, Kıtlık Toprağına (Bölüm 32)</div>
+    <div class="featured-meta"><span>2026</span> &nbsp;•&nbsp; Bölüm 32</div>
+    <!-- OYNATMA BUTONUNA GİZLİ VİDMOLY LİNKİNİ GÖMDÜK PATRON -->
+    <button class="watch-btn" onclick="reklamliGit('', 'izle.html?title=Cennetin%20Bahcesinden%20Kitlik%20Topragina&vid=https%3A%2F%2Fvidmoly.me%2Fembed-7w9nmz17w8np.html')">
         <i class="fa-solid fa-play"></i> Hemen İzle
     </button>
 </div>
 
-<!-- YENİ EKLENENLER (623299.jpg) -->
+<!-- YENİ EKLENENLER -->
 <div class="section-box">
     <div class="section-header">
         <div class="section-title" style="color: #4df3a9;"><i class="fa-solid fa-wand-magic-sparkles"></i> Yeni Eklenenler</div>
@@ -238,25 +239,25 @@
     </div>
 </div>
 
-<!-- POPÜLERLER (623299.jpg) -->
+<!-- POPÜLERLER -->
 <div class="section-box">
     <div class="section-header">
         <div class="section-title" style="color: #ff4545;"><i class="fa-solid fa-fire"></i> Popülerler</div>
         <a href="#" class="view-all">Tümünü Gör <i class="fa-solid fa-chevron-right"></i></a>
     </div>
     <div class="horizontal-scroll">
-        <!-- Kart 1 -->
-        <div class="drama-card" onclick="reklamliGit('https://reklam-linkin.com', 'olum-kitabi.html')">
+        <!-- Kart 1 - BURAYI DA YENİ DİZİMİZE BAĞLADIK PATRON -->
+        <div class="drama-card" onclick="reklamliGit('', 'izle.html?title=Cennetin%20Bahcesinden%20Kitlik%20Topragina&vid=https%3A%2F%2Fvidmoly.me%2Fembed-7w9nmz17w8np.html')">
             <div class="image-wrapper">
                 <span class="tag-yeni">YENİ</span>
                 <span class="tag-populer">POPÜLER</span>
                 <span class="tag-dublaj">Dublajlı</span>
-                <span class="tag-bolum">64 Bölüm</span>
+                <span class="tag-bolum">Ep 32</span>
                 <img class="card-thumb" src="https://picsum.photos/300/450?random=4">
                 <div class="fav-heart"><i class="fa-regular fa-heart"></i></div>
             </div>
-            <div class="card-title">(Dublajlı) Ölüm Kitabı İle Dünyaya Dönüş</div>
-            <div class="card-brand"><i class="fa-solid fa-clapperboard"></i> NetShort</div>
+            <div class="card-title">(Dublajlı) Cennetin Bahçesinden Kıtlık Toprağına</div>
+            <div class="card-brand"><i class="fa-solid fa-clapperboard"></i> HDKore</div>
         </div>
         <!-- Kart 2 -->
         <div class="drama-card" onclick="reklamliGit('https://reklam-linkin.com', 'gucun-ve-askin.html')">
@@ -287,7 +288,7 @@
     </div>
 </div>
 
-<!-- VIBESHORT DİZİLERİ (623300.jpg) -->
+<!-- VIBESHORT DİZİLERİ -->
 <div class="section-box">
     <div class="section-header">
         <div class="section-title"><i class="fa-solid fa-video" style="color: #2463eb;"></i> VibeShort Dizileri</div>
@@ -307,7 +308,7 @@
     </div>
 </div>
 
-<!-- SABİT MOBİL ALT MENÜ (623299.jpg / 623300.jpg) -->
+<!-- SABİT MOBİL ALT MENÜ -->
 <nav class="bottom-nav">
     <a class="nav-item active"><i class="fa-solid fa-house"></i>Ev</a>
     <a class="nav-item"><i class="fa-solid fa-magnifying-glass"></i>Arama</a>
@@ -319,7 +320,9 @@
 <script>
     // Tıklanınca arka sekmede reklam açıp ön planda izleme sayfasına götüren fonksiyon patron
     function reklamliGit(reklamLinki, hedefSayfa) {
-        window.open(reklamLinki, '_blank');
+        if(reklamLinki && reklamLinki !== '') {
+            window.open(reklamLinki, '_blank');
+        }
         window.location.href = hedefSayfa;
     }
 </script>
