@@ -14,21 +14,38 @@
         .card img { width: 100%; border-radius: 10px; }
         .card p { font-size: 14px; text-align: center; margin-top: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         #player-area { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); display: none; z-index: 9999; }
-        .close-btn { position: absolute; top: 20px; right: 20px; color: #fff; font-size: 30px; cursor: pointer; }
+        .close-btn { position: absolute; top: 20px; right: 20px; color: #fff; font-size: 30px; cursor: pointer; z-index: 10000; }
+        .ad-box { text-align: center; margin: 15px 0; }
     </style>
 </head>
 <body>
 
 <header>SHORTMINIFLIX GLOBAL</header>
+
+<div class="ad-box">
+    <script>
+      atOptions = { 'key' : '6e51b3b7743a50a58bc59b89c2697dd4', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
+    </script>
+    <script src="https://www.highperformanceformat.com/6e51b3b7743a50a58bc59b89c2697dd4/invoke.js"></script>
+</div>
+
 <div id="content"></div>
 
 <div id="player-area">
-    <span class="close-btn" onclick="document.getElementById('player-area').style.display='none'">&times;</span>
-    <iframe id="video-frame" width="100%" height="90%" style="margin-top:5%" frameborder="0" allowfullscreen></iframe>
+    <span class="close-btn" onclick="document.getElementById('player-area').style.display='none'; document.getElementById('video-frame').src='';">&times;</span>
+    
+    <div class="ad-box" style="margin-top: 60px;">
+        <script>
+          atOptions = { 'key' : '6e51b3b7743a50a58bc59b89c2697dd4', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
+        </script>
+        <script src="https://www.highperformanceformat.com/6e51b3b7743a50a58bc59b89c2697dd4/invoke.js"></script>
+    </div>
+    
+    <iframe id="video-frame" width="100%" height="50%" frameborder="0" allowfullscreen></iframe>
 </div>
 
 <script>
-    const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6wWAZd3zUj5UqzxkX2ln7hOq1DwjTNCaNOfudPbuUPHzzd4GQZVM_V9tX8Li6nG_gC88eFm42tJmg/pub?output=csv";
+    const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT1xdKBrpwXrTTcu8as6Up-Z_-V_GXnnBzVH8bqIrF5jpZFUKxvI3LFsmBbF39RdlcMeatiYzawoy5Y/pub?output=csv";
 
     async function loadData() {
         const response = await fetch(csvUrl);
@@ -36,23 +53,21 @@
         const rows = data.split('\n').slice(1);
         
         let categories = {};
-
         rows.forEach(row => {
             const [name, link, poster, category] = row.split(',');
             if(!name || !category) return;
-            
             const cat = category.trim();
             if(!categories[cat]) categories[cat] = [];
-            categories[cat].push({name, link, poster});
+            categories[cat].push({name: name.trim(), link: link.trim(), poster: poster ? poster.trim() : ''});
         });
 
         const content = document.getElementById('content');
         for(const cat in categories) {
-            content.innerHTML += `<h3 class="section-title">${cat}</h3><div class="scroll" id="${cat}-list"></div>`;
+            content.innerHTML += `<h3 class="section-title">${cat}</h3><div class="scroll" id="${cat.replace(/\s+/g, '-')}-list"></div>`;
             categories[cat].forEach(film => {
-                document.getElementById(cat + '-list').innerHTML += `
+                document.getElementById(cat.replace(/\s+/g, '-') + '-list').innerHTML += `
                     <div class="card" onclick="play('${film.link}')">
-                        <img src="${film.poster}" loading="lazy">
+                        <img src="${film.poster}" loading="lazy" onerror="this.src='https://via.placeholder.com/140x200?text=Film'">
                         <p>${film.name}</p>
                     </div>`;
             });
