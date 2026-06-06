@@ -4,82 +4,315 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ShortMiniFlix Global</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    
     <style>
-        body { background: #000; color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 20px; }
-        header { text-align: center; color: #e50914; font-size: 28px; font-weight: 800; margin-bottom: 20px; }
-        .section-title { color: #fff; margin-top: 30px; border-left: 4px solid #e50914; padding-left: 10px; }
-        .scroll { display: flex; gap: 15px; overflow-x: auto; padding: 10px 0; }
-        .card { min-width: 140px; cursor: pointer; transition: transform 0.2s; }
-        .card:hover { transform: scale(1.05); }
-        .card img { width: 100%; border-radius: 10px; }
-        .card p { font-size: 14px; text-align: center; margin-top: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        #player-area { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); display: none; z-index: 9999; }
-        .close-btn { position: absolute; top: 20px; right: 20px; color: #fff; font-size: 30px; cursor: pointer; z-index: 10000; }
-        .ad-box { text-align: center; margin: 15px 0; }
+        body { 
+            background: #0c0c0e; 
+            color: #fff; 
+            font-family: 'Inter', sans-serif; 
+            margin: 0; 
+            padding: 15px;
+            padding-bottom: 50px;
+        }
+        
+        header { 
+            text-align: center; 
+            color: #e50914; 
+            font-size: 24px; 
+            font-weight: 800; 
+            margin-bottom: 15px; 
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* 🔍 Canlı Arama Çubuğu */
+        .search-container {
+            margin: 0 auto 20px auto;
+            max-width: 500px;
+            width: 100%;
+        }
+        #search-input {
+            width: 100%;
+            padding: 12px 20px;
+            background: #151518;
+            border: 1px solid #222;
+            border-radius: 25px;
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.2s;
+            box-sizing: border-box;
+        }
+        #search-input:focus {
+            border-color: #e50914;
+            background: #19191d;
+            box-shadow: 0 0 10px rgba(229, 9, 20, 0.2);
+        }
+        
+        .section-title { 
+            color: #fff; 
+            margin-top: 25px; 
+            margin-bottom: 10px;
+            border-left: 4px solid #e50914; 
+            padding-left: 10px; 
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .scroll { 
+            display: flex; 
+            gap: 12px; 
+            overflow-x: auto; 
+            padding: 5px 0 15px 0; 
+            scrollbar-width: none; 
+        }
+        .scroll::-webkit-scrollbar {
+            display: none; 
+        }
+        
+        .card { 
+            min-width: 120px; 
+            max-width: 120px;
+            cursor: pointer; 
+            transition: transform 0.2s; 
+            background: #151518;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #1f1f23;
+        }
+        .card:active { transform: scale(0.95); }
+        
+        .poster-box {
+            position: relative;
+            width: 100%;
+            padding-top: 140%;
+            background: #222;
+        }
+        .poster-box img { 
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%; 
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .card p { 
+            font-size: 12px; 
+            text-align: center; 
+            margin: 6px 4px; 
+            white-space: nowrap; 
+            overflow: hidden; 
+            text-overflow: ellipsis; 
+            font-weight: 600;
+            color: #f5f5f7;
+        }
+        
+        /* Tam Ekran Oyuncu Modalı */
+        #player-area { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: rgba(12,12,14,0.98); 
+            display: none; 
+            z-index: 9999; 
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .close-btn { 
+            position: absolute; 
+            top: 15px; 
+            right: 20px; 
+            color: #fff; 
+            font-size: 36px; 
+            cursor: pointer; 
+            z-index: 10000; 
+        }
+        
+        .video-container {
+            width: 95%;
+            max-width: 500px;
+            position: relative;
+            padding-bottom: 56.25%; 
+            height: 0;
+            background: #000;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 1px solid #222;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .ad-warning {
+            width: 85%;
+            max-width: 460px;
+            background: rgba(229, 9, 20, 0.08);
+            border: 1px solid rgba(229, 9, 20, 0.3);
+            color: #ffb4b4;
+            padding: 10px;
+            margin-top: 20px;
+            font-size: 11px;
+            border-radius: 6px;
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        .loader {
+            text-align: center;
+            color: #86868b;
+            font-size: 14px;
+            padding: 40px;
+        }
     </style>
 </head>
 <body>
 
 <header>SHORTMINIFLIX GLOBAL</header>
 
-<div class="ad-box">
-    <script>
-      atOptions = { 'key' : '6e51b3b7743a50a58bc59b89c2697dd4', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
-    </script>
-    <script src="https://www.highperformanceformat.com/6e51b3b7743a50a58bc59b89c2697dd4/invoke.js"></script>
+<!-- Canlı Arama Kutusu -->
+<div class="search-container">
+    <input type="text" id="search-input" oninput="filterDramas()" placeholder="Dizi, film veya kategori ara patron...">
 </div>
 
-<div id="content"></div>
+<div id="content">
+    <div class="loader" id="loading-text">İçerikler yükleniyor patron...</div>
+</div>
 
 <div id="player-area">
-    <span class="close-btn" onclick="document.getElementById('player-area').style.display='none'; document.getElementById('video-frame').src='';">&times;</span>
+    <span class="close-btn" onclick="closePlayer()">&times;</span>
     
-    <div class="ad-box" style="margin-top: 60px;">
-        <script>
-          atOptions = { 'key' : '6e51b3b7743a50a58bc59b89c2697dd4', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
-        </script>
-        <script src="https://www.highperformanceformat.com/6e51b3b7743a50a58bc59b89c2697dd4/invoke.js"></script>
+    <div class="video-container">
+        <iframe id="video-frame" frameborder="0" allowfullscreen scrolling="no"></iframe>
     </div>
-    
-    <iframe id="video-frame" width="100%" height="50%" frameborder="0" allowfullscreen></iframe>
+
+    <div class="ad-warning">
+        <strong>⚠️ OYNATMA UYARISI:</strong> Videoyu başlatırken açılan reklam sekmelerini kapatıp buraya geri dönerek filmi <strong>ÜCRETSİZ</strong> izlemeye devam edebilirsin patron.
+    </div>
 </div>
 
 <script>
+    // Senin Hazır Google E-Tablo Linkin
     const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT1xdKBrpwXrTTcu8as6Up-Z_-V_GXnnBzVH8bqIrF5jpZFUKxvI3LFsmBbF39RdlcMeatiYzawoy5Y/pub?output=csv";
 
     async function loadData() {
-        const response = await fetch(csvUrl);
-        const data = await response.text();
-        const rows = data.split('\n').slice(1);
-        
-        let categories = {};
-        rows.forEach(row => {
-            const [name, link, poster, category] = row.split(',');
-            if(!name || !category) return;
-            const cat = category.trim();
-            if(!categories[cat]) categories[cat] = [];
-            categories[cat].push({name: name.trim(), link: link.trim(), poster: poster ? poster.trim() : ''});
-        });
-
-        const content = document.getElementById('content');
-        for(const cat in categories) {
-            content.innerHTML += `<h3 class="section-title">${cat}</h3><div class="scroll" id="${cat.replace(/\s+/g, '-')}-list"></div>`;
-            categories[cat].forEach(film => {
-                document.getElementById(cat.replace(/\s+/g, '-') + '-list').innerHTML += `
-                    <div class="card" onclick="play('${film.link}')">
-                        <img src="${film.poster}" loading="lazy" onerror="this.src='https://via.placeholder.com/140x200?text=Film'">
-                        <p>${film.name}</p>
-                    </div>`;
+        try {
+            const response = await fetch(csvUrl);
+            const data = await response.text();
+            const rows = data.split('\n').slice(1);
+            
+            let categories = {};
+            
+            rows.forEach(row => {
+                const columns = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+                if(columns.length < 2) return;
+                
+                const name = columns[0]?.replace(/"/g, '').trim();
+                const link = columns[1]?.replace(/"/g, '').trim();
+                const poster = columns[2]?.replace(/"/g, '').trim() || 'https://via.placeholder.com/300x450/222/fff?text=No+Image';
+                const category = columns[3]?.replace(/"/g, '').trim() || 'Genel';
+                
+                if(!name || !link) return;
+                
+                if(!categories[category]) categories[category] = [];
+                categories[category].push({ name, link, poster });
             });
+
+            const contentDiv = document.getElementById('content');
+            contentDiv.innerHTML = ''; 
+            
+            for (const [catName, movies] of Object.entries(categories)) {
+                let sectionHtml = `<div class="category-section" data-cat-name="${catName.toLowerCase()}">`;
+                sectionHtml += `<h3 class="section-title">${catName}</h3>`;
+                sectionHtml += `<div class="scroll">`;
+                
+                movies.forEach(movie => {
+                    // Tek tırnak hatalarını önlemek için güvenli link temizliği
+                    let safeLink = movie.link.replace(/'/g, "\\'");
+                    
+                    sectionHtml += `
+                        <div class="card" data-name="${movie.name.toLowerCase()}" onclick="openPlayer('${safeLink}')">
+                            <div class="poster-box">
+                                <img src="${movie.poster}" alt="${movie.name}">
+                            </div>
+                            <p>${movie.name}</p>
+                        </div>
+                    `;
+                });
+                
+                sectionHtml += `</div></div>`;
+                contentDiv.innerHTML += sectionHtml;
+            }
+            
+        } catch (error) {
+            document.getElementById('loading-text').innerText = "Veri yüklenirken bir hata oluştu patron!";
+            console.error(error);
         }
     }
 
-    function play(link) {
-        document.getElementById('video-frame').src = link;
-        document.getElementById('player-area').style.display = 'block';
+    // 🔍 Canlı Arama Filtreleme Sistemi
+    function filterDramas() {
+        const query = document.getElementById('search-input').value.toLowerCase().trim();
+        const sections = document.querySelectorAll('.category-section');
+        
+        sections.forEach(section => {
+            const cards = section.querySelectorAll('.card');
+            let visibleCardsInSection = 0;
+            
+            cards.forEach(card => {
+                const dramaName = card.getAttribute('data-name');
+                if (dramaName.includes(query)) {
+                    card.style.display = 'block';
+                    visibleCardsInSection++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            const catName = section.getAttribute('data-cat-name');
+            if (catName.includes(query)) {
+                cards.forEach(card => card.style.display = 'block');
+                visibleCardsInSection = cards.length;
+            }
+            
+            if (visibleCardsInSection > 0) {
+                section.style.display = 'block';
+            } else {
+                section.style.display = 'none';
+            }
+        });
     }
 
-    loadData();
+    // Doğrudan Gelen Linki Oynatma Fonksiyonu
+    function openPlayer(videoUrl) {
+        const playerArea = document.getElementById('player-area');
+        const videoFrame = document.getElementById('video-frame');
+        
+        let embedUrl = videoUrl;
+        if(videoUrl.includes('streamtape.com/v/')) {
+            embedUrl = videoUrl.replace('streamtape.com/v/', 'streamtape.com/e/');
+        }
+        
+        videoFrame.src = embedUrl;
+        playerArea.style.display = 'flex';
+    }
+
+    function closePlayer() {
+        document.getElementById('player-area').style.display = 'none';
+        document.getElementById('video-frame').src = '';
+    }
+
+    window.onload = loadData;
 </script>
+
 </body>
 </html>
